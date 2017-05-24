@@ -41,6 +41,10 @@ public class Round {
         return this.points;
     }
 
+    public TossType getType(){
+        return this.type;
+    }
+
     public String[] getTosses(){
         if(this.type == TossType.STRIKE && !isLastRound){
             return new String[]{ " ", "X"};

@@ -28,8 +28,12 @@ public class Game {
         int[] scores = new int[MAXROUNDS];
         for(int i=0; i<MAXROUNDS; i++){
             if(i < currentRound){
-                overall += rounds[i].getPoints();
-                scores[i] = overall;
+                if(rounds[i].getPoints() <= Round.ALLPINS && (rounds[i].getType() == TossType.SPARE || rounds[i].getType() == TossType.STRIKE)){
+                    scores[i] = -1;
+                }else {
+                    overall += rounds[i].getPoints();
+                    scores[i] = overall;
+                }
             }else {
                 scores[i] = -1;
             }
