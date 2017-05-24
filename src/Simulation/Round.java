@@ -54,6 +54,7 @@ public class Round {
                 if(i > 0 && this.type == TossType.SPARE) result[i] = "/";
                 else result[i] = "X";
             }
+            if(i > 0 && toss[i-1] + toss[i] == ALLPINS) result[i] = "/";
         }
 
         return result;
@@ -71,6 +72,7 @@ public class Round {
         }
         if(current == 0) points = 0;
         if(pins <= 0) pins = 0;
+        if(current > 0 && pins > (ALLPINS - toss[current-1])) pins = (ALLPINS - toss[current-1]);
         if(pins >= ALLPINS) pins = ALLPINS;
 
         toss[current] = pins;
@@ -91,7 +93,15 @@ public class Round {
         }
         game.notify(id - 1, tosses);
 
+        //only throw a third time in the last round, if a strike or spare occured
+        if(isLastRound && current == toss.length - 2){
+            if(this.type == TossType.STRIKE || this.type == TossType.SPARE) return true;
+            return false;
+        }
+        //if this was not the last toss and neither a strike occured or this was the last round, another
+        // toss is possible
         if(current < toss.length - 1 && (this.type != TossType.STRIKE || isLastRound)) return true;
+        //another toss, if last round and spare or strike
         return false;
     }
 

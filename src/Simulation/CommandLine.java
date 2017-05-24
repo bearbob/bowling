@@ -28,6 +28,7 @@ public class CommandLine {
             System.out.println(template[0]);
             System.out.println(template[1]);
             System.out.println(template[2]);
+            System.out.println();
         }
     }
 

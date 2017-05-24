@@ -21,11 +21,12 @@ public class Game {
         int overall = 0;
         int[] scores = new int[MAXROUNDS];
         for(int i=0; i<MAXROUNDS; i++){
-            if(i <= currentRound){
+            if(i < currentRound){
                 overall += rounds[i].getPoints();
                 scores[i] = overall;
+            }else {
+                scores[i] = -1;
             }
-            scores[i] = -1;
         }
 
         return scores;
@@ -61,7 +62,7 @@ public class Game {
      * @return True if the game was finished
      */
     public boolean hasEnded(){
-        return (currentRound+1 >= MAXROUNDS);
+        return (currentRound+1 > MAXROUNDS);
     }
 
 }
