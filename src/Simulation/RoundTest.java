@@ -8,7 +8,7 @@ public class RoundTest {
     @Test
     public void toss() throws Exception {
         singleRound();
-        doubleRound();
+        complexRounds();
     }
 
     private void singleRound(){
@@ -37,7 +37,7 @@ public class RoundTest {
         assertFalse(r.toss(1));
     }
 
-    private void doubleRound(){
+    private void complexRounds(){
         Game g;
         int sum;
 

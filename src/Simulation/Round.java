@@ -8,14 +8,14 @@ public class Round {
     private Game game;
     private int id;
     private TossType type = TossType.NORMAL;
-    // Holds the total score up to this round
-    // Holds the number of point scored in this round
     private int points = -1;
     private int[] toss;
     private boolean isLastRound = false;
-    private boolean modified = false;
+    private boolean updated = false;
 
     /**
+     * @param game
+     * @param id Unique id of the round in the game
      * @param isLastRound True, if this round is the last round of the game
      */
     public Round(Game game, int id, boolean isLastRound){
@@ -30,12 +30,11 @@ public class Round {
     }
 
     /**
-     * Returns the total score up to this round
-     * @return
+     * @return The Points of this round, or -1 if no score should be shown
      */
     public int getPoints(){
         //don't return the points, if the round was a strike or spare and is still awaiting the next results
-        if(points == ALLPINS && !modified && (this.type == TossType.STRIKE || this.type == TossType.SPARE)){
+        if(points == ALLPINS && !updated && (this.type == TossType.STRIKE || this.type == TossType.SPARE)){
             return -1;
         }
         return this.points;
@@ -45,6 +44,9 @@ public class Round {
         return this.type;
     }
 
+    /**
+     * @return A string array containing the string value of the pins hit with each toss. Special values are used for tosses that resulted in a strike, spare or gutter.
+     */
     public String[] getTosses(){
         if(this.type == TossType.STRIKE && !isLastRound){
             return new String[]{ " ", "X"};
@@ -102,15 +104,13 @@ public class Round {
         }
         game.notify(id - 1, tosses);
 
-        //only throw a third time in the last round, if a strike or spare occured
+        //only throw a third time in the last round, if a strike or spare occurred
         if(isLastRound && current == toss.length - 2){
-            if(this.type == TossType.STRIKE || this.type == TossType.SPARE) return true;
-            return false;
+            return (this.type == TossType.STRIKE || this.type == TossType.SPARE);
         }
-        //if this was not the last toss and neither a strike occured or this was the last round, another
+        //if this was not the last toss and neither a strike occurred or this was the last round, another
         // toss is possible
         if(current < toss.length - 1 && (this.type != TossType.STRIKE || isLastRound)) return true;
-        //another toss, if last round and spare or strike
         return false;
     }
 
@@ -120,14 +120,14 @@ public class Round {
      * strikes.
      * @param pins The pins hit in each toss
      */
-    public void setFollowingToss(int[] pins){
-        //ignore if points have been modified before
-        if(modified) return;
+    protected void setFollowingToss(int[] pins){
+        //ignore if points have been updated before
+        if(updated) return;
 
         //use only if type not spare or strike
         if(this.type == TossType.SPARE){
             this.points += pins[0];
-            modified = true;
+            updated = true;
         }
         if(this.type == TossType.STRIKE){
             //call previous toss if only one toss
@@ -135,9 +135,13 @@ public class Round {
                 game.notify(id - 1, new int[]{this.points, pins[0]});
             }else{
                 this.points += pins[0] + pins[1];
-                modified = true;
+                updated = true;
             }
         }
+    }
+
+    public boolean isUpdated(){
+        return this.updated;
     }
 
 }
