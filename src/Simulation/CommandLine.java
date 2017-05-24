@@ -1,15 +1,22 @@
 package Simulation;
 
 import java.io.IOException;
+import java.util.Scanner;
 import java.util.concurrent.ThreadLocalRandom;
 
 public class CommandLine {
 
     public static void main(String[] args) throws IOException {
+
+        Scanner keyboard = new Scanner(System.in);
+        System.out.println("Press <Enter> to start a new game.");
+        keyboard.nextLine();
         //Start a new game
         Game g = new Game();
 
         while(!g.hasEnded()){
+            System.out.println("Press <Enter> to toss the bowl.");
+            keyboard.nextLine();
             //use random generator to get the amount of hit pins
             int pins = ThreadLocalRandom.current().nextInt(0, Round.ALLPINS + 1);
             g.toss(pins);
