@@ -1,11 +1,17 @@
 package Simulation;
 
 public class Game {
-    private static final int MAXROUNDS = 10;
+    public static final int DEFAULTROUNDS = 10;
+    private int MAXROUNDS = DEFAULTROUNDS;
     private Round[] rounds;
     private int currentRound = 0;
 
     public Game(){
+        this(DEFAULTROUNDS);
+    }
+
+    public Game(int maximumRounds){
+        this.MAXROUNDS = maximumRounds;
         rounds = new Round[MAXROUNDS];
         for(int i=0; i<MAXROUNDS; i++){
             // Create the rounds and if it is the last round, set the flag

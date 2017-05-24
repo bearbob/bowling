@@ -70,6 +70,10 @@ public class Round {
         for(; current < toss.length; current++){
             if(toss[current] < 0) break;
         }
+        //no new tosses in this round allowed
+        if(current == toss.length) return false;
+
+        //modify points to fit ranges
         if(current == 0) points = 0;
         if(pins <= 0) pins = 0;
         if(current > 0 && pins > (ALLPINS - toss[current-1])) pins = (ALLPINS - toss[current-1]);

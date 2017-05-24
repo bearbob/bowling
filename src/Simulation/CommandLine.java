@@ -1,6 +1,5 @@
 package Simulation;
 
-import java.io.Console;
 import java.io.IOException;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -10,17 +9,7 @@ public class CommandLine {
         //Start a new game
         Game g = new Game();
 
-        /*
-        Console c = System.console();
-        if(c == null){
-            System.err.println("Error while handling the console.");
-            System.exit(1);
-        }
-        */
-
         while(!g.hasEnded()){
-            //c.readLine("Press <Enter> to toss.");
-
             //use random generator to get the amount of hit pins
             int pins = ThreadLocalRandom.current().nextInt(0, Round.ALLPINS + 1);
             g.toss(pins);
