@@ -90,7 +90,7 @@ public class RoundTest {
         assertTrue(g.toss(Round.ALLPINS));
         scores = g.getScores();
         sum = scores[scores.length-1];
-        assertEquals(38, sum);
+        assertEquals(39, sum);
 
         g = new Game(2);
         //Spare and Fail
@@ -100,7 +100,30 @@ public class RoundTest {
         assertTrue(g.toss(1));
         scores = g.getScores();
         sum = scores[scores.length-1];
-        assertEquals(12, sum);
+        assertEquals(11, sum);
+
+        g = new Game(10);
+        //Test Example given in instructions
+        assertFalse(g.toss(Round.ALLPINS));
+        assertFalse(g.toss(9));
+        assertFalse(g.toss(1));
+        assertFalse(g.toss(5));
+        assertFalse(g.toss(5));
+        assertFalse(g.toss(7));
+        assertFalse(g.toss(2));
+        assertFalse(g.toss(Round.ALLPINS));
+        assertFalse(g.toss(Round.ALLPINS));
+        assertFalse(g.toss(Round.ALLPINS));
+        assertFalse(g.toss(9));
+        assertFalse(g.toss(0));
+        assertFalse(g.toss(8));
+        assertFalse(g.toss(2));
+        assertFalse(g.toss(9));
+        assertFalse(g.toss(1));
+        assertTrue(g.toss(Round.ALLPINS));
+        scores = g.getScores();
+        sum = scores[scores.length-1];
+        assertEquals(187, sum);
 
         g = new Game(10);
         //PerfectGame

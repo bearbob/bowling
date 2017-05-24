@@ -13,6 +13,7 @@ public class Round {
     private int points = -1;
     private int[] toss;
     private boolean isLastRound = false;
+    private boolean modified = false;
 
     /**
      * @param isLastRound True, if this round is the last round of the game
@@ -34,7 +35,7 @@ public class Round {
      */
     public int getPoints(){
         //don't return the points, if the round was a strike or spare and is still awaiting the next results
-        if(points == ALLPINS && (this.type == TossType.STRIKE || this.type == TossType.SPARE)){
+        if(points == ALLPINS && !modified && (this.type == TossType.STRIKE || this.type == TossType.SPARE)){
             return -1;
         }
         return this.points;
@@ -76,7 +77,7 @@ public class Round {
         //modify points to fit ranges
         if(current == 0) points = 0;
         if(pins <= 0) pins = 0;
-        if(current > 0 && pins > (ALLPINS - toss[current-1])) pins = (ALLPINS - toss[current-1]);
+        if(current > 0 && !isLastRound && pins > (ALLPINS - toss[current-1])) pins = (ALLPINS - toss[current-1]);
         if(pins >= ALLPINS) pins = ALLPINS;
 
         toss[current] = pins;
@@ -117,11 +118,12 @@ public class Round {
      */
     public void setFollowingToss(int[] pins){
         //ignore if points have been modified before
-        if(points > ALLPINS) return;
+        if(modified) return;
 
         //use only if type not spare or strike
         if(this.type == TossType.SPARE){
             this.points += pins[0];
+            modified = true;
         }
         if(this.type == TossType.STRIKE){
             //call previous toss if only one toss
@@ -129,6 +131,7 @@ public class Round {
                 game.notify(id - 1, new int[]{this.points, pins[0]});
             }else{
                 this.points += pins[0] + pins[1];
+                modified = true;
             }
         }
     }
