@@ -11,7 +11,7 @@ public class Game {
     }
 
     public Game(int maximumRounds){
-        this.MAXROUNDS = maximumRounds;
+        this.MAXROUNDS = (maximumRounds>0)? maximumRounds : 0;
         rounds = new Round[MAXROUNDS];
         for(int i=0; i<MAXROUNDS; i++){
             // Create the rounds and if it is the last round, set the flag
