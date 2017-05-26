@@ -13,6 +13,7 @@ public class CommandLine {
         keyboard.nextLine();
         //Start a new game
         Game g = new Game();
+        System.out.println("A new game has been started. Good luck!");
 
         while(!g.hasEnded()){
             System.out.println("Press <Enter> to toss the bowl.");
@@ -26,6 +27,8 @@ public class CommandLine {
             System.out.println(template[2]);
             System.out.println();
         }
+        System.out.println("You scored a total of "+g.getScores()[g.getScores().length-1]+ " points.");
+        System.out.println("Game over.");
     }
 
     private static String[] getTemplate(int[] scores, String[][] tosses){

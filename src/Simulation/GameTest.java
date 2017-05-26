@@ -4,9 +4,9 @@ import org.junit.Test;
 
 import static org.junit.Assert.*;
 
-public class TestCases {
+public class GameTest {
 
-    @Test
+    @org.junit.Test
     public void games() throws Exception {
         Game g = new Game(-1);
         assertTrue(g.hasEnded());
@@ -18,7 +18,7 @@ public class TestCases {
         assertFalse(g.hasEnded());
     }
 
-    @Test
+    @org.junit.Test
     public void singleRound() throws Exception {
         Game g = new Game();
         Round r = new Round(g, 0, false);
@@ -46,7 +46,7 @@ public class TestCases {
         assertEquals(12, r.getPoints());
     }
 
-    @Test
+    @org.junit.Test
     public void complexRounds() throws Exception {
         Game g;
         int sum;
@@ -119,7 +119,7 @@ public class TestCases {
         assertEquals(11, sum);
 
         g = new Game(10);
-        //Test Example given in instructions
+        //GameTest Example given in instructions
         assertFalse(g.toss(Round.ALLPINS));
         assertFalse(g.toss(9));
         assertFalse(g.toss(1));
@@ -162,7 +162,7 @@ public class TestCases {
         assertEquals(300, sum);
     }
 
-    @Test
+    @org.junit.Test
     public void output() throws Exception {
         Game g = new Game();
         assertEquals(10, g.getScores().length);
